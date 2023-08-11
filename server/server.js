@@ -3,12 +3,15 @@ require("dotenv").config()
 const express = require("express")
 const app = express()
 const cors = require("cors")
-app.use(express.json())
 app.use(
   cors({
-    origin: "http://localhost:5500",
+    origin: ["http://localhost:5500", "http://127.0.0.1:3000"],
   })
 )
+
+app.use(express.static('public'))
+app.use(express.json())
+
 
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
 
