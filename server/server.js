@@ -1,33 +1,31 @@
-require("dotenv").config()
+require("dotenv").config();
 
-const express = require("express")
-const app = express()
-const cors = require("cors")
+const express = require("express");
+const app = express();
+const cors = require("cors");
+
 app.use(
   cors({
     origin: ["http://localhost:5500", "http://127.0.0.1:3000"],
   })
-)
+);
 
-app.use(express.static('public'))
-app.use(express.json())
+app.use(express.static("public"));
+app.use(express.json());
 
-
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const storeItems = new Map([
-  [1, { priceInCents: 10000, name: "Item 1" }],
-  [2, { priceInCents: 20000, name: "Item 2" }],
+  [1, { priceInCents: 1000, name: "Learn React Today" }],
+  [2, { priceInCents: 2000, name: "Learn CSS Today" }],
 ])
 
-const items = [
-  { id: 1, name: "Item 1", price: 10.00 },
-  { id: 2, name: "Item 2", price: 20.00 },
-];
-
 app.get("/items", (req, res) => {
-  res.json(items);
+  const itemsArray = Array.from(storeItems); 
+  res.json(itemsArray);
 });
+
+
 app.post("/create-checkout-session", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -37,7 +35,7 @@ app.post("/create-checkout-session", async (req, res) => {
         const storeItem = storeItems.get(item.id)
         return {
           price_data: {
-            currency: "usd",
+            currency: "eur",
             product_data: {
               name: storeItem.name,
             },
@@ -48,11 +46,14 @@ app.post("/create-checkout-session", async (req, res) => {
       }),
       success_url: `${process.env.CLIENT_URL}/success.html`,
       cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
-    })
-    res.json({ url: session.url })
+    });
+    res.json({ url: session.url });
   } catch (e) {
-    res.status(500).json({ error: e.message })
+    res.status(500).json({ error: e.message });
   }
-})
+});
 
-app.listen(3000)
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
