@@ -25,7 +25,7 @@ npm install
 ```
 3. Create a `.env` file in the root of the project and add your Stripe private key:
 ```
-STRIPE_SECRET_KEY=your_stripe_private_key_here
+STRIPE_PRIVATE_KEY = "ENTER_YOUR_PRIVATE_KEY_HERE"
 ```
 Make sure to replace `your_stripe_private_key_here` with your actual Stripe private key, which you can obtain from your Stripe Dashboard.
 
