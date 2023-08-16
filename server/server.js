@@ -7,7 +7,7 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const app = express();
 
 app.use(cors({
-  origin: ["http://localhost:5500", "http://127.0.0.1:3000"],
+  origin: ["http://127.0.0.1:3000"],
 }));
 app.use(express.static("public"));
 app.use(express.json());
