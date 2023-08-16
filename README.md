@@ -27,7 +27,7 @@ npm install
 ```
 STRIPE_PRIVATE_KEY = "ENTER_YOUR_PRIVATE_KEY_HERE"
 ```
-Make sure to replace `your_stripe_private_key_here` with your actual Stripe private key, which you can obtain from your Stripe Dashboard.
+Make sure to replace `ENTER_YOUR_PRIVATE_KEY_HERE` with your actual Stripe private key, which you can obtain from your Stripe Dashboard.
 
 4. Start the Node.js server:
    
